@@ -15,4 +15,5 @@
 /gui/dist
 /gui/.vite
 node_modules
+vendor
 /.spg-TTS-cache/
