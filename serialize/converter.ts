@@ -26,10 +26,12 @@ import {
 import { join } from "@std/path";
 import { exists } from "@std/fs";
 
-import {duration} from 'jsr:@dbushell/audio-duration';
+import { duration } from "@dbushell/audio-duration";
 
-export async function folderToPack(folder: Folder, metadata?: Metadata): Promise<Pack> {
-
+export async function folderToPack(
+  folder: Folder,
+  metadata?: Metadata,
+): Promise<Pack> {
   const {title, description, format, version, nightMode, ...otherMetadata}  = metadata || {};
   const firstSubFolder = folder.files.find((f) => isFolder(f)) as Folder;
   const audio = getFolderAudioItem(folder);
@@ -56,7 +58,7 @@ export async function folderToPack(folder: Folder, metadata?: Metadata): Promise
         options: [
           firstSubFolder
             ? await folderToMenu(firstSubFolder, "")
-            : await fileToStory(firstStoryFile(folder)!),
+            : fileToStory(firstStoryFile(folder)!),
         ],
       },
     },
@@ -86,7 +88,10 @@ export async function folderToPack(folder: Folder, metadata?: Metadata): Promise
   return res;
 }
 
-export async function folderToMenu(folder: Folder, path: string): Promise<Menu> {
+export async function folderToMenu(
+  folder: Folder,
+  path: string,
+): Promise<Menu> {
   const image = getFolderImageItem(folder);
   const audio = getFolderAudioItem(folder);
   const folderPath = folder.path + "/";
@@ -111,7 +116,7 @@ export async function folderToMenu(folder: Folder, path: string): Promise<Menu> 
             : isStory(f as File)
             ? await fileToStoryItem(f as File, folder)
             : isZipFile(f as File)
-            ? await fileToZipMenu(`${path}/${folder.name}/${f.name}`)
+            ? fileToZipMenu(`${path}/${folder.name}/${f.name}`)
             : null
         )))
         .filter((f) => f) as (Menu | ZipMenu | StoryItem)[],
@@ -135,17 +140,25 @@ function getMTime(path: string | undefined) {
   }
 }
 
-export async function fileToStoryItem(file: File, parent: Folder): Promise<StoryItem> {
+export async function fileToStoryItem(
+  file: File,
+  parent: Folder,
+): Promise<StoryItem> {
   const audio = getFileAudioItem(file, parent);
   const image = getFileImageItem(file, parent);
   let name = cleanStageName(file.name);
-  const metadataPath = join(parent.path!, getNameWithoutExt(file.name)+ "-metadata.json");
-  if (await exists(metadataPath)) {
-    try {
-      const metadata =JSON.parse(await Deno.readTextFile(metadataPath))
-      name = metadata?.title ?? name
-    } catch (error) {
-      console.error(`error reading json metadata: ${metadataPath}`, error);
+  if (parent.path) {
+    const metadataPath = join(
+      parent.path!,
+      getNameWithoutExt(file.name) + "-metadata.json",
+    );
+    if (await exists(metadataPath)) {
+      try {
+        const metadata = JSON.parse(await Deno.readTextFile(metadataPath));
+        name = metadata?.title ?? name;
+      } catch (error) {
+        console.error(`error reading json metadata: ${metadataPath}`, error);
+      }
     }
   }
   const res: StoryItem = {
@@ -166,7 +179,7 @@ export async function fileToStoryItem(file: File, parent: Folder): Promise<Story
         {
           class: "StageNode-Story",
           audio: getFileAudioStory(file)?.assetName ?? null,
-          duration: (await duration(file.path!)),
+          duration: file.path ? (await duration(file.path)) : undefined,
           image: null,
           name,
           okTransition: null,

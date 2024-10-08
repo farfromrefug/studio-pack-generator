@@ -79,7 +79,10 @@ export function getFileAudioItem(file: File, parent: Folder) {
   const nameWithoutExt = rmDiacritic(getNameWithoutExt(file.name));
   const audioItem = parent.files.find(
     (f) =>
-      getNameWithoutExt(rmDiacritic(f.name)).replace(/(-generated)?.item$/, "") ===
+      getNameWithoutExt(rmDiacritic(f.name)).replace(
+          /(-generated)?.item$/,
+          "",
+        ) ===
         rmDiacritic(nameWithoutExt) &&
       fileAudioItemRegEx.test(f.name),
   ) as File;
@@ -98,7 +101,7 @@ export function getFileImageItem(file: File, parent: Folder) {
   const ImageItem = parent.files.find(
     (f) =>
       getNameWithoutExt(rmDiacritic(f.name))
-          .replace(/(-generated)?.item$/, "") ===
+          .replace(/(-generated)?.item$/, "") === // TODO handle all cases of .item ! all ItemRegEx... all generations
         rmDiacritic(nameWithoutExt) &&
       fileImageItemRegEx.test(f.name),
   ) as File;
@@ -214,7 +217,10 @@ export function rmDiacritic(s: string) {
 
 export function convertToValidFilename(name: string): string {
   // first we remove all unwanted chars. Then we "trim" the spaces
-  return name.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9_\-.,()'! ]/g, " ").replace(/\s{1,}/, " ").trim();
+  return name.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9_\-.,()'! ]/g, " ").replace(
+    /\s{1,}/,
+    " ",
+  ).trim();
 }
 
 export function cleanStageName(name: string): string {
@@ -238,4 +244,12 @@ export function cleanOption(opt: ModOptions): ModOptions {
     .sort((a, b) => a[0].localeCompare(b[0]))
     .forEach(([k, v]) => (cleanOpt[k] = v));
   return cleanOpt as ModOptions;
+}
+
+export function getSpgDirPath() {
+  return $.path(
+    Deno.mainModule.includes("deno-compile")
+      ? Deno.execPath()
+      : Deno.mainModule,
+  ).resolve("..");
 }

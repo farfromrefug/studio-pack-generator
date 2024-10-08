@@ -1,4 +1,4 @@
-# Studio-Pack-Generator
+# Studio-Pack-Generator (SPG)
 
 This project convert a folder or a RSS URL to
 [Studio](https://github.com/marian-m12l/studio) pack zip for Lunii device, see
@@ -9,6 +9,18 @@ Supported OS: Windows / Linux / macOS
 **[⭐ Une grosse communauté est présente sur Discord pour créer et partager des pack Lunii ! ⭐](https://discord.com/invite/jg9MjHBWQC)**
 
 **[⭐ A big french community is present on Discord to create and share Lunii packs ⭐](https://discord.com/invite/jg9MjHBWQC)**
+
+**🔊💬🎵 Other devices/Apps use the Studio pack format :**
+
+- [Telmi-story-teller](https://github.com/DantSu/Telmi-story-teller) for the
+  Miyoo Mini retro gaming console
+- [Conty](https://github.com/Akylas/conty) -
+  [android app on the PlayStore](https://play.google.com/store/apps/details?id=com.akylas.conty)
+- [Boîte à histoires - android app apk](https://github.com/Cyri1/bah)
+- [Nimilou](https://github.com/octera/Nimilou) -
+  [android app on the PlayStore](https://play.google.com/store/apps/details?id=info.octera.droidstorybox)
+- [Grigri - the open storyteller](https://github.com/olup/grigri)
+- [open-story-teller - Open source hardware/software](https://github.com/arabine/open-story-teller)
 
 ## Quick start
 
@@ -228,6 +240,7 @@ Options:
       --rss-split-length             RSS will be split in parts of N length                       [number] [default: 10]
       --rss-split-seasons            RSS create different packs per season                    [boolean] [default: false]
       --rss-min-duration             RSS min episode duration                                      [number] [default: 0]
+      --rss-use-subtitle-as-title    Use rss items subtitle as title                          [boolean] [default: false]
       --rss-use-image-as-thumbnail   Use rss image (first item with image) as thumbnail       [boolean] [default: false]
       --use-thumbnail-as-root-image  Use thumbnail as 'root' image instead of generated one   [boolean] [default: false]
   -r, --skip-rss-image-dl            skip RSS image download of items                         [boolean] [default: false]
@@ -245,6 +258,10 @@ Options:
   -u, --gui                          open GUI (on localhost:5555)                             [boolean] [default: false]
       --port                         port of GUI server                                         [number] [default: 5555]
       --config-file                  json config file                                                           [string]
+      --skip-read-tts-cache          disable the TTS cache usage                              [boolean] [default: false]
+      --skip-write-tts-cache         disable the TTS cache write                              [boolean] [default: false]
+      --tts-cache-path               path to the TTS cache                [string] [default: "<SPG dir>/.spg-TTS-cache"]
+      --custom-script                custom script to be used for custom image... handling                      [string]
 ```
 
 Separate options by spaces, ex :
@@ -290,6 +307,11 @@ All key/value are optional, ex:
 }
 ```
 
+## TTS cache
+
+A folder `<studio-pack-generator install dir>/.spg-TTS-cache/` is used to keep
+the generated audio files.
+
 ## OpenAI TTS
 
 To use OpenAI TTS, use `--use-open-ai-tts` option, and you must set the API key:
@@ -328,6 +350,20 @@ studio-pack-generator -x -o output/dir  2-full.zip
 
 Note: it doesn't work well with "menu" nodes and with pack without "question"
 stage.
+
+## TTS cache
+
+To speed up / save CPU
+
+## Custom script to fetch RSS image
+
+Usage : `--custom-script=<path>`
+
+```
+export interface CustomModule {
+   fetchRssItemImage?: (item: RssItem, opt: ModOptions) => Promise<string>;
+}
+```
 
 ## json config file
 
@@ -373,7 +409,17 @@ File format (all the properties are optionals) :
   "coquiTtsModel": "tts_models/multilingual/multi-dataset/xtts_v2",
   "coquiTtsLanguageIdx": "fr",
   "coquiTtsSpeakerIdx": "Abrahan Mack",
-  "port": 5555
+  "port": 5555,
+  "skipWriteTtsCache": false,
+  "skipReadTtsCache": false,
+  "ttsCachePath": "/tmp/spg-tts-cache",
+  "i18n": {
+    "special": "Special",
+    "season": "Season %d",
+    "storyQuestion": "Choose your story",
+    "partQuestion": "Choose your part",
+    "NightModeTransition": "Want to listen to a new story?"
+  }
 }
 ```
 

@@ -1,5 +1,5 @@
 {
-  "version": "0.5.7",
+  "version": "0.5.9",
   "license": "MIT",
   "name": "@jersou/studio-pack-generator",
   "tasks": {
@@ -11,14 +11,17 @@
     "pre-commit": "deno task fmt --check && deno task lint && deno task test && deno task check",
     "start": "deno run -A --unstable studio_pack_generator.ts",
     "test": "deno test -A --ignore=gui/assets_bundle.json,gui/frontend,tmp,dist,.cov_profile,vendor",
-    "test-watch": "deno test -A --watch --unstable --ignore=gui/assets_bundle.json,gui/frontend,tmp,dist,.cov_profile,vendor"
+    "test-watch": "deno test -A --watch --unstable --ignore=gui/assets_bundle.json,gui/frontend,tmp,dist,.cov_profile,vendor",
+    "update-frontend-assets": "cd gui/frontend && npm run build && ../gui.ts updateAssets"
   },
   "imports": {
     "@david/dax": "jsr:@david/dax@^0.42.0",
+    "@dbushell/audio-duration": "jsr:@dbushell/audio-duration@^0.6.0",
     "@es-toolkit/es-toolkit": "jsr:@es-toolkit/es-toolkit@^1.23.0",
     "@jersou/clite": "jsr:@jersou/clite@^0.5.0",
     "@libs/xml": "jsr:@libs/xml@^6.0.0",
     "@std/assert": "jsr:@std/assert@^1.0.6",
+    "@std/crypto": "jsr:@std/crypto@^1.0.3",
     "@std/encoding": "jsr:@std/encoding@^1.0.5",
     "@std/fmt": "jsr:@std/fmt@^1.0.2",
     "@std/fs": "jsr:@std/fs@^1.0.4",

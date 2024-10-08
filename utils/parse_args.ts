@@ -5,7 +5,8 @@ import { generatePack } from "../gen_pack.ts";
 import { PackExtractor } from "../extract_pack.ts";
 import { openGui } from "../gui/gui.ts";
 import type { ModOptions } from "../types.ts";
-import { OPEN_AI_MODELS, OPEN_AI_VOICES } from "../types.ts";
+import { getDefaultTtsPath } from "../generate/tts_cache.ts";
+import { OPEN_AI_MODELS, OPEN_AI_VOICES } from "../common-types.ts";
 
 export async function parseArgs(args: string[]) {
   // @ts-ignore yargs
@@ -312,19 +313,31 @@ export async function parseArgs(args: string[]) {
       hidden: true,
       describe: "true if compiled with deno compile",
     })
+    .option("skip-read-tts-cache", {
+      demandOption: false,
+      boolean: true,
+      default: false,
+      describe: "disable the TTS cache usage",
+    })
+    .option("skip-write-tts-cache", {
+      demandOption: false,
+      boolean: true,
+      default: false,
+      describe: "disable the TTS cache write",
+    })
+    .option("tts-cache-path", {
+      demandOption: false,
+      boolean: false,
+      default: getDefaultTtsPath().toString(),
+      type: "string",
+      describe: "path to the TTS cache",
+    })
     .option("custom-script", {
       demandOption: false,
       boolean: false,
       default: undefined,
       type: "string",
       describe: "custom script to be used for custom image... handling",
-    })
-    .option("i18n", {
-      demandOption: false,
-      boolean: false,
-      default: undefined,
-      type: "object",
-      describe: "custom translation options",
     })
     .version(false)
     .demandCommand(1)
