@@ -77,7 +77,11 @@ export async function generatePack(opt: ModOptions) {
   await initI18n(lang);
   let pathsToHandle = [opt.storyPath];
   if (opt.storyPath.startsWith("http")) {
-    pathsToHandle = await downloadRss(opt.storyPath, opt.outputFolder ? opt.outputFolder : ".", opt);
+    pathsToHandle = await downloadRss(
+      opt.storyPath,
+      opt.outputFolder ? opt.outputFolder : ".",
+      opt,
+    );
     console.log(`downloaded in ${opt.storyPath}`);
   }
   for (const storyPath of pathsToHandle) {
