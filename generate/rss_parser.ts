@@ -76,7 +76,7 @@ async function getFolderWithUrlFromRssUrl(
   const metadata = {
     title: rss.title,
     description: rss.description,
-    podcast: true // can be used by players to know if that pack is a podcast
+    podcast: true, // can be used by players to know if that pack is a podcast
   } as Metadata;
   if (opt.rssMinDuration > 0) {
     rss.item = rss.item.filter((i) => {
@@ -200,9 +200,9 @@ async function getFolderOfStories(
           episode: item["itunes:episode"] || item["podcast:episode"] ||
             deltaIndex + index + 1,
           title: opt.customModule?.fetchRssItemTitle
-          ? await opt.customModule?.fetchRssItemTitle(item, opt)
-          : (opt.rssUseSubtitleAsTitle && item["itunes:subtitle"]) ||
-            item.title,
+            ? await opt.customModule?.fetchRssItemTitle(item, opt)
+            : (opt.rssUseSubtitleAsTitle && item["itunes:subtitle"]) ||
+              item.title,
         },
         sha1: "",
       }];
