@@ -35,8 +35,13 @@ export async function serializePack(
     version: (opt.metadata?.version) || pack.version,
     description: opt.metadata?.description || pack.description,
     format: opt.metadata?.format || pack.format,
-    nightModeAvailable: opt.metadata?.nightModeAvailable || pack.nightModeAvailable,
-    ...(Object.assign({}, pack.extraMetadata ?? {}, opt.metadata?.extraMetadata || {})),
+    nightModeAvailable: opt.metadata?.nightModeAvailable ||
+      pack.nightModeAvailable,
+    ...(Object.assign(
+      {},
+      pack.extraMetadata ?? {},
+      opt.metadata?.extraMetadata || {},
+    )),
     actionNodes: [],
     stageNodes: [],
   };
