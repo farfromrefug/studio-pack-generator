@@ -73,7 +73,6 @@ export async function generatePack(opt: ModOptions) {
   }
 
   const start = Date.now();
-  console.log("generatePack", { opt });
   const lang = opt.lang || (await getLang());
   await initI18n(lang);
   let pathsToHandle = [opt.storyPath];
