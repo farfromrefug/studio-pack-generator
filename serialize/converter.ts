@@ -29,16 +29,19 @@ import { exists } from "@std/fs";
 import {duration} from 'jsr:@dbushell/audio-duration';
 
 export async function folderToPack(folder: Folder, metadata?: Metadata): Promise<Pack> {
+
+  const {title, description, format, version, nightMode, ...otherMetadata}  = metadata || {};
   const firstSubFolder = folder.files.find((f) => isFolder(f)) as Folder;
   const audio = getFolderAudioItem(folder);
   const image = getFolderImageItem(folder);
   const folderPath = folder.path + "/";
   const res: Pack = {
-    title: metadata?.title ?? folder.name,
-    description: metadata?.description ?? "",
-    format: metadata?.format ?? "v1",
-    version: metadata?.version ?? 1,
-    nightModeAvailable: !!(metadata?.nightMode),
+    title: title ?? folder.name,
+    description: description ?? "",
+    format: format ?? "v1",
+    version: version ?? 1,
+    nightModeAvailable: !!(nightMode),
+    ...otherMetadata,
     entrypoint: {
       class: "StageNode-Entrypoint",
       name: "Cover node",
