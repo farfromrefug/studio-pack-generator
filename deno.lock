@@ -484,6 +484,7 @@
     "https://deno.land/x/openai@v4.67.1/internal/qs/formats.ts": "7bbe68548238a984644a723bd045614c5b0e81c1a0ae5c3acc050931442d67d7",
     "https://deno.land/x/openai@v4.67.1/internal/qs/mod.ts": "eab02831aa5e2896d12b824cebf9b2c3a0fc718e8488a05b6d7c2d35895c102a",
     "https://deno.land/x/openai@v4.67.1/internal/qs/stringify.ts": "777514fc7107d6878a8ac80897bd4ca6f9be7ecf67ecf51f57359ec5e7186763",
+    "https://deno.land/x/openai@v4.67.1/internal/qs/types.ts": "9c319089f022ad9d1fd95d87e2232de8c352bb980ee51de757b4bc23181cfbc2",
     "https://deno.land/x/openai@v4.67.1/internal/qs/utils.ts": "9a2ecb6321ed49aa4e6f7cd7a47778365c7c3778283264c7c5e1756bfd7b97d1",
     "https://deno.land/x/openai@v4.67.1/lib/AbstractChatCompletionRunner.ts": "2ebc15b6513f98f9002cef24406c0187125704f8c3c7a8f26f80e420f155413c",
     "https://deno.land/x/openai@v4.67.1/lib/AssistantStream.ts": "4d7ab356cc77299e98a5926908ed080de2af0083bba6a1ffeb5509bc8f8d0a9d",
