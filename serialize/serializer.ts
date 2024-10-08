@@ -36,6 +36,7 @@ export async function serializePack(
     description: pack.description,
     format: pack.format,
     nightModeAvailable: pack.nightModeAvailable,
+    ...(pack.extraMetadata ?? {}),
     actionNodes: [],
     stageNodes: [],
   };

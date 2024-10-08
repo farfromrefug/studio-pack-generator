@@ -43,7 +43,7 @@ export async function folderToPack(
     format: format ?? "v1",
     version: version ?? 1,
     nightModeAvailable: !!(nightMode),
-    ...otherMetadata,
+    extraMetadata: otherMetadata,
     entrypoint: {
       class: "StageNode-Entrypoint",
       name: "Cover node",
