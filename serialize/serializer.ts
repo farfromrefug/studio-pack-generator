@@ -31,12 +31,12 @@ export async function serializePack(
   serializePackOption?: SerializePackOption,
 ): Promise<SerializedPack> {
   const serialized: SerializedPack = {
-    title: pack.title,
-    version: pack.version,
-    description: pack.description,
-    format: pack.format,
-    nightModeAvailable: pack.nightModeAvailable,
-    ...(pack.extraMetadata ?? {}),
+    title: opt.metadata?.title || pack.title,
+    version: (opt.metadata?.version) || pack.version,
+    description: opt.metadata?.description || pack.description,
+    format: opt.metadata?.format || pack.format,
+    nightModeAvailable: opt.metadata?.nightModeAvailable || pack.nightModeAvailable,
+    ...(Object.assign({}, pack.extraMetadata ?? {}, opt.metadata?.extraMetadata || {})),
     actionNodes: [],
     stageNodes: [],
   };
