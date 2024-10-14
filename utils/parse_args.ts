@@ -264,6 +264,12 @@ export async function parseArgs(args: string[]) {
       default: false,
       describe: "use coqui TTS",
     })
+    .option("coqui-tts-use-cuda", {
+      demandOption: false,
+      boolean: true,
+      default: false,
+      describe: "enable CUDA in coqui TTS",
+    })
     .option("coqui-tts-model", {
       demandOption: false,
       boolean: false,
