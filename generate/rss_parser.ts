@@ -67,12 +67,16 @@ async function getFolderWithUrlFromRssUrl(
   opt: StudioPackGenerator,
 ): Promise<FolderWithUrlOrData[]> {
   console.log(green(`→ url = ${url}`));
-
-  const resp = await fetch(url);
-  const xml = (await resp.text()).replace(/<\?xml-stylesheet [^>]+\?>/, "");
-  // @ts-ignore rss conv
-  // deno-lint-ignore no-explicit-any
-  const rss: Rss = (parse(xml).rss as any).channel;
+  let rss: Rss;
+  if (opt.customModule?.fetchRssItems) {
+    rss = await opt.customModule?.fetchRssItems(url, opt);
+  } else {
+    const resp = await fetch(url);
+    const xml = (await resp.text()).replace(/<\?xml-stylesheet [^>]+\?>/, "");
+    // @ts-ignore rss conv
+    // deno-lint-ignore no-explicit-any
+    rss = (parse(xml).rss as any).channel;
+  }
   const metadata = {
     title: rss.title,
     description: rss.description,
