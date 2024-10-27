@@ -87,13 +87,14 @@ async function getFolderWithUrlFromRssUrl(
       const duration = i["itunes:duration"];
       if (duration) {
         return (
-          duration
-            .split(":")
-            .reduce(
-              (acc, val, index) =>
-                acc + Math.pow(60, 2 - index) * parseInt(val, 10),
-              0,
-            ) >= opt.rssMinDuration
+          (typeof duration === "string"
+            ? duration.split(":")
+              .reduce(
+                (acc, val, index) =>
+                  acc + Math.pow(60, 2 - index) * parseInt(val, 10),
+                0,
+              )
+            : duration) >= opt.rssMinDuration
         );
       } else {
         return true;
@@ -140,8 +141,8 @@ async function getFolderWithUrlFromRssUrl(
         ]?.["@href"]
         : imgUrl,
       metadata: {
-        ...metadata,
         title: name,
+        ...metadata,
         ...(opt.rssEpisodeNumbers
           ? {
             episodeCount: items.length,
