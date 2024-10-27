@@ -2,6 +2,7 @@
   "version": "0.5.10",
   "license": "MIT",
   "name": "@jersou/studio-pack-generator",
+  "nodeModulesDir":"auto",
   "tasks": {
     "fmt": "deno fmt --ignore=gui/assets_bundle.json,gui/frontend,tmp,dist,.cov_profile,vendor",
     "gen-bin": "./gen-bin.sh",
