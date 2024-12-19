@@ -1,0 +1,27 @@
+{
+  "selectNextStoryAtEnd": true,
+  "skipExtractImageFromMp3": true,
+  "skipImageItemGen": true,
+  "skipAudioItemGen": true,
+  "skipAudioConvert": false,
+  "skipRssImageDl": false,
+  "skipImageConvert": true,
+  "lang": "fr-FR",
+  "imageItemGenFont": "Gluten-SemiBold",
+  "thumbnailFromFirstItem": false,
+  "rssSplitLength": 100,
+  "rssSplitSeasons": true,
+  "rssMinDuration": 180,
+  "rssEpisodeNumbers": true,
+  "rssUseImageAsThumbnail": false,
+  "useThumbnailAsRootImage": true,
+  "rssUseSubtitleAsTitle": false,
+  "useCoquiTts": true,
+  "coquiTtsUseCuda": true,
+  "coquiTtsModel": "tts_models/multilingual/multi-dataset/xtts_v2",
+  "coquiTtsLanguageIdx": "fr",
+  "coquiTtsSpeakerIdx": "Abrahan Mack",
+  "storyPath": "https://feed.eugenemolotov.ru/?action=display&bridge=YoutubeBridge&context=By+playlist+Id&p=PL7xKXsYmMJu9THNw8vQHnM6gRjGEB4fLc&duration_min=3&duration_max=30&format=Mrss",
+  "customScript": "./customScript.ts"
+
+}
